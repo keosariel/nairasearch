@@ -1,0 +1,4 @@
+sqlalchemy
+tldextract
+bs4
+requests
