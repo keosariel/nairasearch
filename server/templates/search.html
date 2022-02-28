@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .result {
+        max-width: 500px;
+        margin: 5px 0;
+        border: 1px solid transparent;
+        padding: 10px;
+    }
+
+    .result:hover {
+        border-color:#e5e5e5;
+    }
+
+    .result .title a{
+        font-size: 18px;
+        text-decoration: none;
+		text-transform: capitalize;
+    }
+
+    .result .link a{
+        color: #006621;
+        font-size: 13px;
+    }
+
+    .result .text {
+        font-size: 15px;
+        margin: 4px 0 0 0;
+        display: block;
+        color: #333;
+        word-break: break-all;
+    }
+
+    .results {
+        text-align: left;
+    }
+
+    .home {
+        margin-top: 1%;
+		margin-bottom: 50px;
+        max-width: 800px;
+    }
+
+    .main {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .top form {
+        display: flex;
+        align-items: center;
+        width: 70%;
+        justify-content: space-between;
+        max-width: 500px;
+    }
+
+    .top form .main-search {
+        display: flex;
+        margin: 0;
+    }
+
+    .autocomplete, .tc {
+        width: 100%;
+    }
+
+    .images a img {
+        height: 100px;
+        width: auto;
+        border: 1px solid #185518;
+        margin: 1px;
+    }
+
+    .title-info {
+        background-color: #185518;
+        color: #fff;
+        padding: 5px;
+        font-size: 14px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .result-info {
+        background: #185518;
+        padding: 6px;
+        width: 100%;
+        color: #fff;
+        margin: 5px 0;
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        align-items: center;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        padding: 0;
+        margin: 10px 0;
+    }
+
+    .pagination li {
+        margin: 0 10px 0 0;
+    }
+	
+	.tag {
+        font-size: 11px;
+        border: 1px solid #185518;
+        background: #a2dfa2;
+        padding: 2px 5px;
+        border-radius: 12px;
+    }
+
+    @media screen and  (max-width: 740px){
+        .top, .top form {
+            flex-direction: column;
+        }
+
+        .top form {
+            margin: 10px 0;
+        }
+
+        .top form .main-search {
+            margin-bottom: 10px;
+        }
+
+        .result-info {
+            display: inline-block;
+        }
+
+        .result-info span:first-child {
+            float: left;
+        }
+
+        .result-info span:last-child {
+            float: right;
+        }
+    }
+
+</style>
+<div class="home">
+	<div class="top">
+
+	<a href="/">	<svg data-v-423bf9ae="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.3402335845784 60" class="font" style="width: 250px;"><!----><!----><!----><g data-v-423bf9ae="" id="891f9a5c-4a97-4b24-9384-ff687d23cda5" fill="#185518" transform="matrix(5.6550420875057705,0,0,5.6550420875057705,-1.2441070274365416,-22.111214809105142)"><path d="M6.96 14.35L9.10 14.35L9.10 11.13L10.30 11.13L10.30 9.97L9.10 9.97L9.10 8.90L10.30 8.90L10.30 7.74L9.10 7.74L9.10 4.58L7.46 4.58L7.46 7.74L5.22 7.74L3.54 4.58L1.43 4.58L1.43 7.74L0.22 7.74L0.22 8.90L1.43 8.90L1.43 9.97L0.22 9.97L0.22 11.13L1.43 11.13L1.43 14.35L3.08 14.35L3.08 11.12L5.25 11.12ZM3.08 10.02L3.08 6.93L3.12 6.93L4.70 10.02ZM5.78 8.85L7.46 8.85L7.46 12.04L7.42 12.04ZM13.37 14.52C14.46 14.52 15.26 14.03 15.50 13.09L15.58 13.09C15.69 13.85 16.17 14.35 16.94 14.35L17.93 14.35L17.93 12.92L17.21 12.92L17.21 9.48C17.21 7.81 16.16 6.87 14.18 6.87C12.71 6.87 11.86 7.43 11.33 8.27L12.39 9.23C12.74 8.72 13.22 8.30 14.06 8.30C15.01 8.30 15.41 8.78 15.41 9.59L15.41 10.12L14.17 10.12C12.18 10.12 11.05 10.86 11.05 12.36C11.05 13.66 11.89 14.52 13.37 14.52ZM13.97 13.22C13.27 13.22 12.87 12.92 12.87 12.33L12.87 12.10C12.87 11.52 13.33 11.20 14.27 11.20L15.41 11.20L15.41 12.17C15.41 12.85 14.77 13.22 13.97 13.22ZM20.29 5.98C21.01 5.98 21.34 5.60 21.34 5.08L21.34 4.80C21.34 4.28 21.01 3.91 20.29 3.91C19.54 3.91 19.24 4.28 19.24 4.80L19.24 5.08C19.24 5.60 19.54 5.98 20.29 5.98ZM19.39 14.35L21.18 14.35L21.18 7.04L19.39 7.04ZM25.05 14.35L25.05 9.87C25.05 9.07 25.68 8.74 26.88 8.74L27.44 8.74L27.44 7.04L27.05 7.04C25.89 7.04 25.30 7.78 25.12 8.55L25.05 8.55L25.05 7.04L23.25 7.04L23.25 14.35ZM30.41 14.52C31.50 14.52 32.30 14.03 32.54 13.09L32.62 13.09C32.73 13.85 33.21 14.35 33.98 14.35L34.97 14.35L34.97 12.92L34.24 12.92L34.24 9.48C34.24 7.81 33.19 6.87 31.22 6.87C29.75 6.87 28.90 7.43 28.36 8.27L29.43 9.23C29.78 8.72 30.25 8.30 31.09 8.30C32.05 8.30 32.45 8.78 32.45 9.59L32.45 10.12L31.21 10.12C29.22 10.12 28.08 10.86 28.08 12.36C28.08 13.66 28.92 14.52 30.41 14.52ZM31.01 13.22C30.31 13.22 29.90 12.92 29.90 12.33L29.90 12.10C29.90 11.52 30.37 11.20 31.30 11.20L32.45 11.20L32.45 12.17C32.45 12.85 31.81 13.22 31.01 13.22ZM38.82 14.52C40.64 14.52 41.83 13.54 41.83 12.12C41.83 10.91 41.06 10.19 39.47 9.97L38.72 9.87C38.04 9.76 37.77 9.53 37.77 9.04C37.77 8.60 38.11 8.29 38.88 8.29C39.59 8.29 40.21 8.62 40.63 9.07L41.68 8.02C40.98 7.29 40.25 6.87 38.82 6.87C37.16 6.87 36.05 7.77 36.05 9.18C36.05 10.51 36.92 11.20 38.49 11.40L39.21 11.49C39.86 11.58 40.11 11.84 40.11 12.26C40.11 12.78 39.75 13.10 38.89 13.10C38.07 13.10 37.42 12.73 36.89 12.11L35.80 13.17C36.53 14.01 37.44 14.52 38.82 14.52ZM46.37 14.52C47.73 14.52 48.79 14 49.39 13.17L48.43 12.10C47.98 12.67 47.45 13.09 46.56 13.09C45.39 13.09 44.79 12.38 44.79 11.33L44.79 11.14L49.64 11.14L49.64 10.56C49.64 8.55 48.59 6.87 46.31 6.87C44.17 6.87 42.92 8.37 42.92 10.68C42.92 13.02 44.21 14.52 46.37 14.52ZM46.34 8.22C47.26 8.22 47.78 8.90 47.78 9.91L47.78 10.04L44.79 10.04L44.79 9.93C44.79 8.92 45.40 8.22 46.34 8.22ZM53.03 14.52C54.12 14.52 54.92 14.03 55.16 13.09L55.24 13.09C55.36 13.85 55.83 14.35 56.60 14.35L57.60 14.35L57.60 12.92L56.87 12.92L56.87 9.48C56.87 7.81 55.82 6.87 53.84 6.87C52.37 6.87 51.52 7.43 50.99 8.27L52.05 9.23C52.40 8.72 52.88 8.30 53.72 8.30C54.67 8.30 55.08 8.78 55.08 9.59L55.08 10.12L53.83 10.12C51.84 10.12 50.71 10.86 50.71 12.36C50.71 13.66 51.55 14.52 53.03 14.52ZM53.63 13.22C52.93 13.22 52.53 12.92 52.53 12.33L52.53 12.10C52.53 11.52 52.99 11.20 53.93 11.20L55.08 11.20L55.08 12.17C55.08 12.85 54.43 13.22 53.63 13.22ZM60.84 14.35L60.84 9.87C60.84 9.07 61.47 8.74 62.68 8.74L63.24 8.74L63.24 7.04L62.85 7.04C61.68 7.04 61.10 7.78 60.91 8.55L60.84 8.55L60.84 7.04L59.05 7.04L59.05 14.35ZM67.37 14.52C68.78 14.52 69.80 13.87 70.28 12.59L68.91 11.93C68.64 12.59 68.22 13.08 67.37 13.08C66.37 13.08 65.87 12.39 65.87 11.37L65.87 10.04C65.87 9.02 66.37 8.32 67.37 8.32C68.14 8.32 68.60 8.76 68.77 9.38L70.24 8.72C69.80 7.57 68.84 6.87 67.37 6.87C65.21 6.87 63.99 8.34 63.99 10.68C63.99 13.03 65.21 14.52 67.37 14.52ZM71.67 14.35L73.46 14.35L73.46 9.52C73.46 8.74 74.17 8.34 74.91 8.34C75.77 8.34 76.12 8.88 76.12 9.91L76.12 14.35L77.91 14.35L77.91 9.73C77.91 7.91 77.07 6.87 75.57 6.87C74.44 6.87 73.82 7.48 73.53 8.26L73.46 8.26L73.46 3.99L71.67 3.99Z"></path></g><!----><!----></svg>
+</a>
+        <form class="bg-light-green dark-green mw7 center pa4 br2-ns" action="/search" method="get">
+            <div class="autocomplete">
+                <div class="main-search">
+                    <input class="f6 f5-l input-reset ba black-80 bg-white pa3 lh-solid w-100"
+                    placeholder="What are you lookin for on Nairaland?" type="text" name="q" value="{{results.query}}" id="input" autofocus="on" autocorrect="off" autocapitalize="off" autocomplete="off">
+                    <span>
+                            <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                    </span>
+                </div>
+                <div class="autocomplete-items" id="sug"></div>
+            </div>
+            <div class=" mt2 tc">
+                <button type="submit" class="f6 br0 bg-dark-green no-underline washed-green ba b--dark-green grow pv2 ph3 dib mr1">
+                    Search Nairaland
+                </button>
+                <button class="f6 br0 dark-green no-underline ba grow pv2 ph3 dib" type="button" onclick="javascript:location.href='https://www.nairaland.com'">
+                    Nairaland.com
+                </button>
+            </div>
+        </form>
+    </div>
+	<div class="result-info">
+        <span>Results for: <b>{{results.query}}</b></span>
+        <span><b>{{results.r1+1}}</b> to <b>{{results.r2}}</b> of about <b>{{results.count}}</b> result(s). Search took <b>{{results.time}}</b> second(s).</span>
+    </div>
+	<div class="results">
+        {% if results.results %}
+        <p>{{ results.correction | safe }}</p>
+        {% for hit in results %}
+            <div class="result">
+				{% set sec = hit.get("sec", "").strip() %}
+				{% set date = hit.get("date", "") %}
+              <span class="title"><a href="{{hit.get('url')}}">{{hit["highlight"].get("title")| safe}}</a> {{ ("<span class='tag'>"+sec+"</span>" if sec else "") | safe }} </span>
+                <br>
+                <span class="link"><a href="{{hit.get('url')}}">{{url_fmt(hit.get("url"))}}</a></span>
+                <br>
+                <div class="text">
+					{% if False %}
+						<span class="rdate">{{date}}&nbsp—&nbsp</span>
+					{% endif %}
+					{{hit["highlight"].get("text") | safe}}
+				</div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <h4>no results found!</h4>
+        {% endif %}
+    </div>
+	{% if results.r2 >= results.page_size %}
+	<ul class="pagination">
+		{% set pages = results.pages %}
+		{% for page in pages%}
+        	<li>
+				{% if type(page) == int %}
+				<a href="?q={{results.query}}&p={{page}}">
+				{% if page == results.current_page %}
+					<b><{{page}}></b>
+				{% else %}
+					{{page}}
+				{% endif %}
+				{% else %}
+					{{page}}
+				{% endif %}
+			</a></li>
+		{% endfor %}
+    </ul>
+	{% endif %}
+</div>
+{% endblock %}
